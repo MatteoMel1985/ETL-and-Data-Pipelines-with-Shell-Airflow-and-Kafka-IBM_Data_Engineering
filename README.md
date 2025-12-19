@@ -51,4 +51,23 @@ Please use the `BashOperator` for all tasks in this assignment.
 
 | Parameter | Value |
 | --------- | ----- |
-| owner | <You may use any dummy name> |  
+| owner | &lt;You may use any dummy name&gt; |  
+| start_date |	today | 
+| email | &lt;You may use any dummy email&gt; | 
+| email_on_failure | True | 
+| email_on_retry | True | 
+| retries | 1 | 
+| retry_delay | 5 minutes | 
+
+*Take a screenshot* of the task code. Name the screenshot `dag_args.jpg`.  
+
+4. Define the DAG in the `ETL_toll_data.py` file using the following details.
+
+| Parameter | Value |
+| --------- | ----- |
+| DAG id | `ETL_toll_data` |  
+| Schedule |		Daily once | 
+| default_args |	As you have defined in the previous step | 
+| description | Apache Airflow Final Assignment |   
+
+*Take a screenshot* of the task code. Name the screenshot `dag_definition.jpg`.  
