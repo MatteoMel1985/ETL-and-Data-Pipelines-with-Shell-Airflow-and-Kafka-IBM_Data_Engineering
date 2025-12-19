@@ -71,3 +71,58 @@ Please use the `BashOperator` for all tasks in this assignment.
 | description | Apache Airflow Final Assignment |   
 
 *Take a screenshot* of the task code. Name the screenshot `dag_definition.jpg`.  
+
+## ***Exercise 3: Create the tasks using BashOperator***  
+
+1. Create a task named `unzip_data` to unzip data. Use the data downloaded in the first part of this assignment in `Set up the lab environment` and uncompress it into the destination directory using `tar`.
+
+*Take a screenshot* of the task code. Name the screenshot `unzip_data.jpg`.  
+
+2. Create a task named `extract_data_from_csv` to extract the fields `Rowid`, `Timestamp`, `Anonymized Vehicle number`, and `Vehicle type` from the `vehicle-data.csv` file and save them into a file named `csv_data.csv`.
+
+*Take a screenshot* of the task code. Name the screenshot `extract_data_from_csv.jpg`.
+
+3. Create a task named `extract_data_from_tsv` to extract the fields `Number of axles`, `Tollplaza id`, and `Tollplaza code` from the `tollplaza-data.tsv` file and save it into a file named `tsv_data.csv`.  
+
+*Take a screenshot* of the task code. Name the screenshot `extract_data_from_tsv.jpg`.   
+
+4. Create a task named `extract_data_from_fixed_width` to extract the fields `Type of Payment code`, and `Vehicle Code` from the fixed width file `payment-data.txt` and save it into a file named `fixed_width_data.csv`.
+
+*Take a screenshot* of the task code. Name the screenshot `extract_data_from_fixed_width.jpg`.   
+
+5. Create a task named `consolidate_data` to consolidate data extracted from previous tasks. This task should create a single csv file named `extracted_data.csv` by combining data from the following files:
+
+* `csv_data.csv`
+* `tsv_data.csv`
+* `fixed_width_data.csv`
+
+The final csv file should use the fields in the order given below:  
+
+* `Rowid`
+* `Timestamp`
+* `Anonymized Vehicle number`
+* `Vehicle type`
+* `Number of axles`
+* `Tollplaza id`
+* `Tollplaza code`
+* `Type of Payment code`, and
+* `Vehicle Code`
+
+> *Hint: Use the bash `paste` command that merges the columns of the files passed as a command-line parameter and sends the output to a new file specified. You can use the command `man paste` to explore more.*
+
+**Example**: `paste file1 file2 > newfile`  
+
+*Take a screenshot* of the task code. Name the screenshot `transform.jpg`.  
+
+7. Define the task pipeline as per the details given below:
+
+| Task | Functionality |
+| --------- | ----- |
+| First task | `unzip_data` |  
+| Second task |	`extract_data_from_csv` | 
+| Third task | `extract_data_from_tsv` | 
+| Fourth task | `extract_data_from_fixed_width` | 
+| Fifth task | `consolidate_data` | 
+| Sixth task | `transform_data` |  
+
+## ***Exercise 4: Getting the DAG operational***  
