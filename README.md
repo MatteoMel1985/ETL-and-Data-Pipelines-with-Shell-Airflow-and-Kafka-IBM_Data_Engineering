@@ -126,3 +126,23 @@ The final csv file should use the fields in the order given below:
 | Sixth task | `transform_data` |  
 
 ## ***Exercise 4: Getting the DAG operational***  
+
+1. Submit the DAG. Use CLI or Web UI to show that the DAG has been properly submitted.
+
+*Take a screenshot showing that the DAG you created is in the list of DAGs. Name the screenshot `submit_dag.jpg`.  
+
+> *Note: If you don't find your DAG in the list, you can check for errors using the following command in the terminal:*
+
+```bash
+airflow dags list-import-errors
+```
+
+2. Unpause and trigger the DAG through CLI or Web UI.
+
+*Take a screenshot of DAG unpaused on CLI or the GUI. Name the screenshot  `unpause_trigger_dag.jpg`*.  
+
+*Take a screenshot of the tasks in the DAG run through CLI or Web UI. Name the screenshot `dag_tasks.jpg`*.  
+
+*Take a screenshot the DAG runs for the Airflow console through CLI or Web UI. Name the screenshot `dag_runs.jpg`.*
+
+
