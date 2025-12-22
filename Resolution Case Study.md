@@ -76,4 +76,33 @@ Once you are done, take a screenshot of the task and name it `dag_args.jpg`.
 
 ![dag_args.jpg`](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/1dag_args.jpg?raw=true)  
 
-Point 4 
+Point 4 of the exercise require us to define the DAG in the `ETL_toll_data.py` file using the following details.
+
+| Parameter | Value |
+| --------- | ----- |
+| DAG id | `ETL_toll_data` |  
+| Schedule |		Daily once | 
+| default_args |	As you have defined in the previous step | 
+| description | Apache Airflow Final Assignment |   
+
+Also this second task is modeled on the previous lab. Following is the code I wrote.  
+
+```bash
+
+# defining the DAG
+
+# define the DAG
+dag = DAG(
+    'ETL_toll_data',
+    default_args=default_args,
+    description='Apache Airflow Final Assignment',
+    schedule_interval=timedelta(days=1),
+)
+```
+
+Finally, we can take a screenshot of this part of the script and save it as `dag_definition.jpg`.  
+
+![dag_definition.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/2dag_definition.jpg?raw=true)  
+
+
+<h1 align="center">Exercise 3: Create the tasks using BashOperator</h1>  
