@@ -11,7 +11,7 @@ from airflow.utils.dates import days_ago
 default_args = {
     'owner': 'Artifex Datorum',
     'start_date': days_ago(0),
-    'email': ['memirloni@gmail.com'],
+    'email': ['write your email here'],
     'email_on_failure': True,
     'email_on_retry': True,
     'retries': 1,
