@@ -209,3 +209,18 @@ Type of Payment code - Code to indicate the type of payment. Example : Prepaid, 
 Vehicle Code -  Category of the vehicle as per the toll plaza.
 ```
 
+Indeed, we may be led to think that we are requested to extract the data from columns 6 and 7, but `.txt` files are not shaped in columns.  
+Interestingly, though, we can observe that in [payment-data.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/payment-data.txt#L1), each piece of information has the same length of characters. Therefore, by counting the characters of each line, we can determine where each piece of data has been stored. By carefully analysing the file, we can determine that `Type of Payment code` is scripted between the 59th and the 61st character of each line, whereas the 62nd character is a space that separates it from the next field, which is the `Vehicle Code`, comprehended between the 63rd and the 67th character. Thus, we can write this section of the code as follows.  
+
+```bash
+# define the fourth task (extracting from txt)
+extract_data_from_fixed_width = BashOperator(
+    task_id='extract_data_from_fixed_width',
+    bash_command='cut -c60-62,64-68 < /home/project/airflow/dags/finalassignment/payment-data.txt > /home/project/airflow/dags/finalassignment/fixed_width_data.csv',
+    dag=dag,
+)
+```
+
+Then, take a screenshot of it and save it as `extract_data_from_fixed_width.jpg`. 
+
+![extract_data_from_fixed_width.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/6extract_data_from_fixed_width.jpg?raw=true)
