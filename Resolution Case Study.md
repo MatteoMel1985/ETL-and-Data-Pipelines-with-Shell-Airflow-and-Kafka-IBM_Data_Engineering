@@ -127,4 +127,36 @@ To complete the task, we can take a screenshot of this part of the code and save
 
 Proceeding with the exercise, we are now requested to create a task named `extract_data_from_csv` to extract the fields `Rowid`, `Timestamp`, `Anonymized Vehicle number`, and `Vehicle type` from the `vehicle-data.csv` file and save them into a file named `csv_data.csv`.  
 
-Before sharing the code I wrote, it is worth analysing both files [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), sharing the explanations of how the information was stored in each file, and [vehicle-data.csv](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/vehicle-data.csv), containing the data we must extract. 
+Before sharing the code I wrote, it is worth analysing both files [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), sharing the explanations of how the information was stored in each file, and [vehicle-data.csv](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/vehicle-data.csv), containing the data we must extract.  
+
+In `fileformats.txt`, we read the following:
+
+```txt
+vehicle-data.csv is a comma-separated values file.
+It has the below 6 fields
+
+Rowid  - This uniquely identifies each row. This is consistent across all the three files.
+Timestamp - What time did the vehicle pass through the toll gate.
+Anonymized Vehicle number - Anonymized registration number of the vehicle 
+Vehicle type - Type of the vehicle
+Number of axles - Number of axles of the vehicle
+Vehicle code - Category of the vehicle as per the toll plaza.
+```
+
+Hence, `Rowid`, `Timestamp`, `Anonymized Vehicle number`, and `Vehicle type` are columns 1, 2, 3, and 4 of `vehicle-data.csv`. This will be specified in the bash command of the code `cut -d"," -f1-4`.  
+
+```bash
+# define the second task (extracting from csv)
+extract_data_from_csv = BashOperator(
+    task_id= 'extract_data_from_csv',
+    bash_command= 'cut -d"," -f1-4 < /home/project/airflow/dags/finalassignment/vehicle-data.csv > /home/project/airflow/dags/finalassignment/csv_data.csv',
+    dag= dag,
+)
+```
+
+Finally, we can take a screenshot of this part of the script and save it as `extract_data_from_csv.jpg`.  
+
+![extract_data_from_csv.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/4extract_data_from_csv.jpg?raw=true)  
+
+
+
