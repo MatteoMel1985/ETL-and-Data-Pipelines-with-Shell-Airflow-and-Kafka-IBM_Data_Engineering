@@ -158,5 +158,54 @@ Finally, we can take a screenshot of this part of the script and save it as `ext
 
 ![extract_data_from_csv.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/4extract_data_from_csv.jpg?raw=true)  
 
+The following request is substantially identical, except for the file format which, this time, is `.tsv`. Indeed, we are now required to create a task named `extract_data_from_tsv` to extract the fields `Number of axles`, `Tollplaza id`, and `Tollplaza code` from the `tollplaza-data.tsv` file and save it into a file named `tsv_data.csv`.  
 
+By reading [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), we see that:
+
+```txt
+tollplaza-data.tsv:
+tollplaza-data.tsv is a tab-separated values file.
+It has the below 7 fields
+
+Rowid  - This uniquely identifies each row. This is consistent across all the three files.
+Timestamp - What time did the vehicle pass through the toll gate.
+Anonymized Vehicle number - Anonymized registration number of the vehicle 
+Vehicle type - Type of the vehicle
+Number of axles - Number of axles of the vehicle
+Tollplaza id - Id of the toll plaza
+Tollplaza code - Tollplaza accounting code.
+```
+
+Hence, we are expected to extract the data from columns 5, 6, and 7. Since  the format `.tar` differs from `.csv` as the information is not comma separated, we don't need to insert the delimiter `-d","` in the bash command.  
+
+```bash
+# define the third task (extracting from tsv)
+extract_data_from_tsv = BashOperator(
+    task_id='extract_data_from_tsv',
+    bash_command='cut -f5-7 < /home/project/airflow/dags/finalassignment/tollplaza-data.tsv > /home/project/airflow/dags/finalassignment/tsv_data.csv',
+    dag=dag,
+)
+```
+
+As we wrote this section of the code, we can take a screenshot of it and save it as `extract_data_from_tsv.jpg`.  
+
+![extract_data_from_tsv.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/5extract_data_from_tsv.jpg?raw=true)  
+
+It is worth noting that the `.txt` format works quite differently. We can see it now as we are called to create a task named `extract_data_from_fixed_width` to extract the fields `Type of Payment code`, and `Vehicle Code` from the fixed width file `payment-data.txt` and save it into a file named `fixed_width_data.csv`.  
+
+Interestingly, what `fileformats.txt`say about [payment-data.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/payment-data.txt#L1) could be quite deceiving:
+
+```txt
+payment-data.txt is a fixed width file. Each field occupies a fixed number of characters.
+
+It has the below 7 fields
+
+Rowid  - This uniquely identifies each row. This is consistent across all the three files.
+Timestamp - What time did the vehicle pass through the toll gate.
+Anonymized Vehicle number - Anonymized registration number of the vehicle 
+Tollplaza id - Id of the toll plaza
+Tollplaza code - Tollplaza accounting code.
+Type of Payment code - Code to indicate the type of payment. Example : Prepaid, Cash.
+Vehicle Code -  Category of the vehicle as per the toll plaza.
+```
 
