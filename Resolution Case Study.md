@@ -85,7 +85,7 @@ Point 4 of the exercise require us to define the DAG in the `ETL_toll_data.py` f
 | default_args |	As you have defined in the previous step | 
 | description | Apache Airflow Final Assignment |   
 
-Also this second task is modeled on the previous lab. Following is the code I wrote.  
+Also this second task is modelled on the previous lab. Following is the code I wrote.  
 
 ```bash
 
@@ -106,3 +106,25 @@ Finally, we can take a screenshot of this part of the script and save it as `dag
 
 
 <h1 align="center">Exercise 3: Create the tasks using BashOperator</h1>  
+
+The first task of Exercise 3 requires us to create a task named `unzip_data` to unzip data. Use the data downloaded in the first part of this assignment in `Set up the lab environment` and uncompress it into the destination directory using tar.  
+
+To do so, I added the following section in `ETL_toll_data.py`.  
+
+```bash
+# define the tasks
+# define the first task (unzipping data)
+unzip_data = BashOperator(
+    task_id='unzip_data',
+    bash_command='tar -xzvf /home/project/airflow/dags/finalassignment/tolldata.tgz -C /home/project/airflow/dags/finalassignment',
+    dag=dag,
+)
+```
+
+To complete the task, we can take a screenshot of this part of the code and save it as `unzip_data.jpg`.  
+
+![unzip_data.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/3unzip_data.jpg?raw=true)  
+
+Proceeding with the exercise, we are now requested to create a task named `extract_data_from_csv` to extract the fields `Rowid`, `Timestamp`, `Anonymized Vehicle number`, and `Vehicle type` from the `vehicle-data.csv` file and save them into a file named `csv_data.csv`.  
+
+Before sharing the code I wrote, it is worth analysing both files [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), sharing the explanations of how the information was stored in each file, and [Tolldata/vehicle-data.csv](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/vehicle-data.csv), containing the data we must extract. 
