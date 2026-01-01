@@ -260,3 +260,41 @@ As requested, we can now take a screenshot of this portion of the code and save 
 
 ![consolidate_data.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/7consolidate_data.jpg?raw=true)  
 
+Continuing with the test, we are now required to create a task named `transform_data` to transform the `vehicle_type` field in `extracted_data.csv` into capital letters and save it into a file named `transformed_data.csv` in the staging directory. Interestingly, the hint provided reads *"You can use the `tr` command within the BashOperator in Airflow."* Technically, the instructions say it all. The following is the code I wrote.  
+
+```bash
+# define the sixth task (transform)
+transform_data = BashOperator(
+    task_id='transform_data',
+    bash_command='tr "[a-z]" "[A-Z]" < /home/project/airflow/dags/finalassignment/extracted_data.csv > /home/project/airflow/dags/finalassignment/staging/transformed_data.csv',
+    dag=dag,
+)
+```
+
+Once done, we can save the screenshot as `transform.jpg`.  
+
+![transform.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/8transform.jpg?raw=true)  
+
+Finally, the last task of the exercise requires us to define the task of the pipeline according to the table provided.  
+
+| Task | Functionality |
+| --------- | ----- |
+| First task | `unzip_data` |  
+| Second task |	`extract_data_from_csv` | 
+| Third task | `extract_data_from_tsv` | 
+| Fourth task | `extract_data_from_fixed_width` | 
+| Fifth task | `consolidate_data` | 
+| Sixth task | `transform_data` |    
+
+The following line is a perfect fit for Airflow.  
+
+```bash
+unzip_data >> extract_data_from_csv >> extract_data_from_tsv >> extract_data_from_fixed_width >> consolidate_data >> transform_data
+```
+
+<h1 align="center">Exercise 4: Getting the DAG operational</h1>  
+
+After taking a screenshot of this final part, we can save it as `task_pipeline.jpg`.  
+
+![task_pipeline.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/9task_pipeline.jpg?raw=true)  
+
