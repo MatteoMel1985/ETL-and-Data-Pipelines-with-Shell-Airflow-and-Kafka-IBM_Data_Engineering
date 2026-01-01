@@ -292,9 +292,9 @@ The following line is a perfect fit for Airflow.
 unzip_data >> extract_data_from_csv >> extract_data_from_tsv >> extract_data_from_fixed_width >> consolidate_data >> transform_data
 ```
 
-<h1 align="center">Exercise 4: Getting the DAG operational</h1>  
-
 After taking a screenshot of this final part, we can save it as `task_pipeline.jpg`.  
 
 ![task_pipeline.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/9task_pipeline.jpg?raw=true)  
+
+<h1 align="center">Exercise 4: Getting the DAG operational</h1>  
 
