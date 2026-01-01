@@ -223,4 +223,40 @@ extract_data_from_fixed_width = BashOperator(
 
 Then, take a screenshot of it and save it as `extract_data_from_fixed_width.jpg`. 
 
-![extract_data_from_fixed_width.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/6extract_data_from_fixed_width.jpg?raw=true)
+![extract_data_from_fixed_width.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/6extract_data_from_fixed_width.jpg?raw=true)  
+
+Following, we are requested to create a task named `consolidate_data` to consolidate data extracted from previous tasks. This task should create a single csv file named `extracted_data.csv` by combining data from the following files:  
+
+* `csv_data.csv`  
+* `tsv_data.csv`
+* `fixed_width_data.csv`
+
+The final csv file should use the fields in the order given below:  
+
+* `Rowid`
+* `Timestamp Anonymized Vehicle number`
+* `Vehicle type`
+* `Number of axles`
+* `Tollplaza id`
+* `Tollplaza code`
+* `Type of Payment code`, and
+* `Vehicle Code`
+
+At this point, it would be quite important to pay attention to the hint given in the instructions, which reads: *Use the bash `paste` command that merges the columns of the files passed as a command-line parameter and sends the output to a new file specified. You can use the command `man paste` to explore more. Example: `paste file1 file2 > newfile`*.  
+
+Hence, I wrote the following code, which specified the path of each file of origin, and consolidates them in the file `extracted_data.csv` by using the paste command. The delimiter command `-d` tells the computer: *"Instead of using a tab, use a comma to separate the data from each file,"* given that our destination file is a `.csv`.
+
+```bash
+# define the fifth task (consolidating the data)
+consolidate_data = BashOperator(
+    task_id= 'consolidate_data',
+    bash_command= 'paste -d, /home/project/airflow/dags/finalassignment/csv_data.csv /home/project/airflow/dags/finalassignment/tsv_data.csv'
+    '/home/project/airflow/dags/finalassignment/fixed_width_data.csv > /home/project/airflow/dags/finalassignment/extracted_data.csv',
+    dag= dag,
+)
+```
+
+As requested, we can now take a screenshot of this portion of the code and save it as `consolidate_data.jpg`. 
+
+![consolidate_data.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/7consolidate_data.jpg?raw=true)  
+
