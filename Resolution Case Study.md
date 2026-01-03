@@ -303,3 +303,32 @@ After taking a screenshot of this final part, we can save it as `task_pipeline.j
 
 <h1 align="center">Exercise 4: Getting the DAG operational</h1>  
 
+To submit the DAG, run these commands from the terminal. 
+
+```bash
+export AIRFLOW_HOME=/home/project/airflow
+```
+
+* `export` creates an environment variable in your current terminal session.
+* `AIRFLOW_HOME = /home/project/airflow` uses `AIRFLOW_HOME` to know where its entire working directory lives.
+
+Finally, the following command to submit is:  
+
+```bash
+sudo cp ETL_toll_data.py $AIRFLOW_HOME/dags/finalassignment/staging
+```
+
+* `sudo` stands for "Super User Do" and runs the command with administrator privileges.
+* `cp ETL_toll_data.py  $AIRFLOW_HOME/dags/finalassignment/staging` copies the file to the directory, so that Apache Airflow can read it.
+
+Finally, to verify if the DAG has been successfully submitted, launch the following command from the terminal.  
+
+```bash
+airflow dags list | grep ETL_toll_data
+```
+
+The command `grep` will scan line by line the DAGs in Apache Airflow and, among them, will search `ETL_toll_data`.  If the DAG submission was successful, the requested screenshot `submit_dag.jpg` will appear as follow. 
+
+![submit_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/10submit_dag.jpg?raw=true)  
+
+
