@@ -263,7 +263,7 @@ consolidate_data = BashOperator(
 
 As requested, we can now take a screenshot of this portion of the code and save it as `consolidate_data.jpg`. 
 
-![consolidate_data.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/7consolidate_data.jpg?raw=true)  
+![consolidate_data.jpg](https://raw.githubusercontent.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/5a59591311a02329597a497644280f6a2c834202/Tasks/7consolidate_data.jpg)  
 
 Continuing with the test, we are now required to create a task named `transform_data` to transform the `vehicle_type` field in `extracted_data.csv` into capital letters and save it into a file named `transformed_data.csv` in the staging directory. Interestingly, the hint provided reads *"You can use the `tr` command within the BashOperator in Airflow."* Technically, the instructions say it all. The following is the code I wrote.  
 
