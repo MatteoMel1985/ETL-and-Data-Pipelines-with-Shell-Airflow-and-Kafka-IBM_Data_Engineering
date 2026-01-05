@@ -352,7 +352,7 @@ If you prefer to trigger the DAG via the user interface, click on the label name
 
 The DAG `ETL_toll_data` should appear on top of the list; however, it could take a few minutes before to be visible, hence, wait for a bit and refresh the page several times until you are able to see it.  
 
-[Screenshot 3](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%203.png?raw=true)  
+![Screenshot 3](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%203.png?raw=true)  
 
 Click on it and you will be prompted in the DAG Details view. On the upper left corner of the page you will see a lever named `Pause/Unpause DAG`, whereas on the upper right side of the screen, you will see a Play button with written `Trigger DAG`. Click on both of them, take a screenshot, and save it as `unpause_trigger_dag.jpg`.  
 
