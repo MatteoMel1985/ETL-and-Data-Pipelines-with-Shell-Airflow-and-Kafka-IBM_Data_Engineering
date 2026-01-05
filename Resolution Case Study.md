@@ -397,6 +397,8 @@ airflow dags list-runs -d ETL_toll_data
 
 Finally, take a screenshot of the output in your terminal and save it as `dag_runs_CLI.jpg`.
 
+![dag_runs_CLI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/13dag_runs-CLI.JPG?raw=true)
+
 ## Running the DAG via UI  
 
 If you want to run the DAG via UI, click on the `Trigger DAG` `play` button on the upper right corner of the screen, as shown on `unpause_trigger_dag.jpg`. Repeat the operation as many times as you want, then take a screenshot of it and save it as `dag_runs_UI.jpg`.
