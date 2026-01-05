@@ -340,3 +340,10 @@ Run the following command in your terminal.
 ```bash
 airflow dags trigger ETL_toll_data
 ```
+If the DAG was submitted correctly, you should see a similar prompt to the image below. Take a screenshot of it and save it as `unpause_trigger_dag.jpg`.  
+
+![unpause_trigger_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_CLI.jpg?raw=true)  
+
+
+## Triggering the DAG via UI  
+
