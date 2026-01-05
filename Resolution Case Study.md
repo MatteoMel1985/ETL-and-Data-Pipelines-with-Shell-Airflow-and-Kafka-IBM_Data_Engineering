@@ -344,6 +344,42 @@ If the DAG was submitted correctly, you should see a similar prompt to the image
 
 ![unpause_trigger_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_CLI.jpg?raw=true)  
 
-
 ## Triggering the DAG via UI  
 
+If you prefer to trigger the DAG via the user interface, click on the label named Apache Airflow in the EDI, and click the `Open in a new broswer tab` button whose icon is a square with an arrow on its upper right angle.  
+
+![Screenshot 2](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%202.png?raw=true)   
+
+The DAG `ETL_toll_data` should appear on top of the list; however, it could take a few minutes before to be visible, hence, wait for a bit and refresh the page several times until you are able to see it.  
+
+[Screenshot 3](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%203.png?raw=true)  
+
+Click on it and you will be prompted in the DAG Details view. On the upper left corner of the page you will see a lever named `Pause/Unpause DAG`, whereas on the upper right side of the screen, you will see a Play button with written `Trigger DAG`. Click on both of them, take a screenshot, and save it as `unpause_trigger_dag.jpg`.  
+
+![unpause_trigger_dag_UI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_UI.jpg?raw=true)  
+
+## Listing the DAG tasks via CLI  
+
+If you want to see the tasks of the DAG via CLI, run the following command from your terminal:  
+
+```bash
+airflow tasks list ETL_toll_data
+```
+
+If you followed the instruction of this case study, your output should appear as the image below. Take a screenshot of it and save it as `dag_tasks.jpg`.  
+
+![dag_tasks.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/12dag_tasks-CLI.JPG?raw=true)  
+
+## List of the DAG tasks on the UI  
+
+To accomplish this task, you can simply take a screenshot of the left side of the DAG Details view, where the tasks are listed, and save it as `dag_tasks_UI.jpg`  
+
+![dag_tasks.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/12dag_tasks_UI.JPG?raw=true)  
+
+## Running the DAG via CLI  
+
+To run the DAG via CLI, write the following command in your terminal.  
+
+```bash
+airflow dags list-runs -d ETL_toll_data
+```  
