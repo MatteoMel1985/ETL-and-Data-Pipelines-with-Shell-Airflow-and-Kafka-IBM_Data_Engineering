@@ -340,7 +340,3 @@ Run the following command in your terminal.
 ```bash
 airflow dags trigger ETL_toll_data
 ```
-
-
-
-
