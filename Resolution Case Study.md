@@ -1,4 +1,4 @@
-<h1 align="center">Exercise 1: Set up the lab environment</h1>  
+<img width="1906" height="613" alt="image" src="https://github.com/user-attachments/assets/aad087bb-1dd1-48f2-b0f0-06d9b96b6d9c" /><h1 align="center">Exercise 1: Set up the lab environment</h1>  
 
 Start Apache Airflow by clicking the purple button on the screen, or by clicking on the left Skills Network Toolbox and selecting `BIG DATA` > `Apache Airflow`; then click on the `Create` button, and wait for it to get started. 
 Proceed now by opening a new terminal by selecting Terminal on the Menu Bar, and selecting New Terminal (or, alternatively, pressing the key combination ``Ctrl`` + ``Shift`` + `` ` ``).  
@@ -327,7 +327,7 @@ Finally, to verify if the DAG has been successfully submitted, launch the follow
 airflow dags list | grep ETL_toll_data
 ```
 
-The command `grep` will scan line by line the DAGs in Apache Airflow and, among them, will search `ETL_toll_data`.  If the DAG submission was successful, the requested screenshot `submit_dag.jpg` will appear as follow. 
+The command `grep` will scan line by line the DAGs in Apache Airflow and, among them, will search `ETL_toll_data`.  If the DAG submission was successful, the requested screenshot `submit_dag.jpg` will appear as follows. 
 
 ![submit_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/10submit_dag.jpg?raw=true)  
 
@@ -350,11 +350,11 @@ If you prefer to trigger the DAG via the user interface, click on the label name
 
 ![Screenshot 2](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%202.png?raw=true)   
 
-The DAG `ETL_toll_data` should appear on top of the list; however, it could take a few minutes before to be visible, hence, wait for a bit and refresh the page several times until you are able to see it.  
+The DAG `ETL_toll_data` should appear on top of the list; however, it could take a few minutes before it is visible, hence, wait for a bit and refresh the page several times until you are able to see it.  
 
 ![Screenshot 3](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%203.png?raw=true)  
 
-Click on it and you will be prompted in the DAG Details view. On the upper left corner of the page you will see a lever named `Pause/Unpause DAG`, whereas on the upper right side of the screen, you will see a Play button with written `Trigger DAG`. Click on both of them, take a screenshot, and save it as `unpause_trigger_dag.jpg`.  
+Click on it, and you will be prompted in the DAG Details view. On the upper left corner of the page, you will see a lever named `Pause/Unpause DAG`, whereas on the upper right side of the screen, you will see a Play button with written `Trigger DAG`. Click on both of them, take a screenshot, and save it as `unpause_trigger_dag.jpg`.  
 
 ![unpause_trigger_dag_UI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_UI.jpg?raw=true)  
 
@@ -366,7 +366,7 @@ If you want to see the tasks of the DAG via CLI, run the following command from 
 airflow tasks list ETL_toll_data
 ```
 
-If you followed the instruction of this case study, your output should appear as the image below. Take a screenshot of it and save it as `dag_tasks.jpg`.  
+If you followed the instructions of this case study, your output should appear as the image below. Take a screenshot of it and save it as `dag_tasks.jpg`.  
 
 ![dag_tasks.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/12dag_tasks-CLI.JPG?raw=true)  
 
@@ -378,8 +378,27 @@ To accomplish this task, you can simply take a screenshot of the left side of th
 
 ## Running the DAG via CLI  
 
-To run the DAG via CLI, write the following command in your terminal.  
+To unpause and trigger the DAG from the CLI in one flow, run the following commands from the terminal.
+
+```bash
+airflow dags unpause ETL_toll_data
+airflow dags trigger ETL_toll_data
+```
+
+This should queue the DAG, as shown in the following screenshot. 
+
+![Screenshot 4](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%204.PNG?raw=true)
+
+To proceed to run it, launch the following code from the terminal.  
 
 ```bash
 airflow dags list-runs -d ETL_toll_data
-```  
+```
+
+Finally, take a screenshot of the output in your terminal and save it as `dag_runs_CLI.jpg`.
+
+## Running the DAG via UI  
+
+If you want to run the DAG via UI, click on the `Trigger DAG` `play` button on the upper right corner of the screen, as shown on `unpause_trigger_dag.jpg`. Repeat the operation as many times as you want, then take a screenshot of it and save it as `dag_runs_UI.jpg`.
+
+![dag_runs_UI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/13dag_runs-UI.JPG?raw=true)
