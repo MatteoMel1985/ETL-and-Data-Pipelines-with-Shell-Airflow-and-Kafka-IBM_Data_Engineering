@@ -1,4 +1,4 @@
-<img width="1906" height="613" alt="image" src="https://github.com/user-attachments/assets/aad087bb-1dd1-48f2-b0f0-06d9b96b6d9c" /><h1 align="center">Exercise 1: Set up the lab environment</h1>  
+<h1 align="center">Exercise 1: Set up the lab environment</h1>  
 
 Start Apache Airflow by clicking the purple button on the screen, or by clicking on the left Skills Network Toolbox and selecting `BIG DATA` > `Apache Airflow`; then click on the `Create` button, and wait for it to get started. 
 Proceed now by opening a new terminal by selecting Terminal on the Menu Bar, and selecting New Terminal (or, alternatively, pressing the key combination ``Ctrl`` + ``Shift`` + `` ` ``).  
