@@ -331,4 +331,16 @@ The command `grep` will scan line by line the DAGs in Apache Airflow and, among 
 
 ![submit_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/10submit_dag.jpg?raw=true)  
 
+At this stage of our work, we are tasked with unpausing the DAG. We can either do it via CLI (command line interface, which is our terminal), or UI (user interface). I will show both methods. 
+
+## Triggering the DAG via CLI  
+
+Run the following command in your terminal.  
+
+```bash
+airflow dags trigger ETL_toll_data
+```
+
+
+
 
