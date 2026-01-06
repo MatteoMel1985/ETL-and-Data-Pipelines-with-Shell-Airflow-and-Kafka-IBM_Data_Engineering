@@ -81,3 +81,37 @@ The final csv file should use the fields in the order given below:
  `Rowid`, `Timestamp`, `Anonymized Vehicle number`, `Vehicle type`, `Number of axles`, `Tollplaza id`, `Tollplaza code`, `Type of Payment code`, and `Vehicle Code`  
 
  7. Create a function named `transform_data` to transform the `vehicle_type` field in `extracted_data.csv` into capital letters and save it into a file named `transformed_data.csv` in the staging directory.
+
+## ***Exercise 4: Create a tasks using PythonOperators and define pipeline***  
+
+1. Create 7 tasks using Python operators that does the following using the Python functions created in Task 2.
+
+i. download_dataset
+ii. untar_dataset
+iii. extract_data_from_csv
+iv. extract_data_from_tsv
+v. extract_data_from_fixed_width
+vi. consolidate_data
+vii. transform_data
+
+2. Define the task pipeline based on the details given below:
+
+| Task | Functionality |
+| --------- | ----- |
+| First task | `download_data` |
+| Second task | `unzip_data` |  
+| Third task |	`extract_data_from_csv` | 
+| Fourth task | `extract_data_from_tsv` | 
+| Fivth task | `extract_data_from_fixed_width` | 
+| Sixth task | `consolidate_data` | 
+| Seventh task | `transform_data` |   
+
+## ***Exercise 5: Save, submit, and run DAG***  
+
+1. Save the DAG you defined.
+
+2. Submit the DAG by copying it into `$AIRFLOW_HOME/dags` directory.
+
+3. Use CLI or Web UI to unpause the task.
+
+4. Observe the outcome of the tasks in DAG on the Airflow console.
