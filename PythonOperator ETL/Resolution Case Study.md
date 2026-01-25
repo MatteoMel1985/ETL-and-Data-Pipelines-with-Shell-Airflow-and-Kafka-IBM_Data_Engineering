@@ -2,12 +2,6 @@
 
 <h1 align="center">Build ETL Data Pipelines with PythonOperator using Apache Airflow</h1>
 
-This document explains how to solve the **PythonOperator** version of the final assignment described in **README.md**. It mirrors the structure and “walkthrough” style of *Resolution Case Study.md*, but focuses on building the solution requested in *README.md* (Python functions + PythonOperators).  
-
-> Goal recap: create an Airflow DAG that downloads and untars a dataset, extracts data from CSV/TSV/fixed-width files, consolidates the extracted outputs, transforms one column to uppercase, and writes the final output to a staging folder.
-
----
-
 <h1 align="center">Exercise 1: Prepare the lab environment</h1>
 
 ## 1) Start Apache Airflow
@@ -471,8 +465,3 @@ In the Airflow UI, you can also click the DAG, unpause it, then trigger it and i
 - **Fixed-width slicing:** always confirm slice positions by inspecting a real line (or checking `fileformats.txt`) before hardcoding.
 - **Headers:** some datasets include headers; if so, decide whether to keep or skip them consistently across the pipeline.
 - **Paths:** keep all file paths inside `STAGING_DIR` so tasks can find each other’s outputs.
-
----
-
-# Author
-**Matteo Meloni**
