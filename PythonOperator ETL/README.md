@@ -115,3 +115,6 @@ vii. transform_data
 3. Use CLI or Web UI to unpause the task.
 
 4. Observe the outcome of the tasks in DAG on the Airflow console.
+
+# Author
+# ***[Matteo Meloni](https://www.linkedin.com/in/matteo-meloni-40a357154/)***
