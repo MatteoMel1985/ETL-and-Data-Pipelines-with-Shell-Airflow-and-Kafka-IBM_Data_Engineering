@@ -78,7 +78,7 @@ Now we have to match the table in README:
 | description | Apache Airflow Final Assignment |    
 
 
-Example:
+Example (ensure to fill this code with your name and email):
 
 ```python
 default_args = {
