@@ -95,7 +95,7 @@ def transform_data():
 
 # Default arguments for the DAG
 default_args = {
-    'owner': 'Your name',
+    'owner': 'Artifex Datorum',
     'start_date': days_ago(0),
     'email': ['your email'],
     'retries': 1,
