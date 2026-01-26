@@ -1,20 +1,23 @@
 <h1 align="center">Exercise 1: Prepare the lab environment</h1>
 
-## 1) Start Apache Airflow
-In Skills Network labs, start Airflow from the UI (purple button / toolbox path).
+## ***Start Apache Airflow***  
 
-## 2) Create the staging directory
+Start Apache Airflow by clicking the purple button on the screen, or by clicking on the left Skills Network Toolbox and selecting BIG DATA > Apache Airflow; then click on the Create button, and wait for it to get started. Proceed now by opening a new terminal by selecting Terminal on the Menu Bar, and selecting New Terminal (or, alternatively, pressing the key combination Ctrl + Shift + `).
+
+## ***Create the staging directory***  
+
 The assignment requires the staging directory:
 
 `/home/project/airflow/dags/python_etl/staging`
 
-Run:
+To creat it, run the following code:
 
 ```bash
 sudo mkdir -p /home/project/airflow/dags/python_etl/staging
 ```
 
-## 3) Fix permissions
+## ***Fix permissions***  
+
 To avoid permission errors when Airflow tasks write files:
 
 ```bash
@@ -25,8 +28,9 @@ sudo chmod -R 777 /home/project/airflow/dags/python_etl
 
 <h1 align="center">Exercise 2: Add imports, define DAG arguments, and define DAG</h1>
 
-## 1) Create the DAG file
-From `/home/project`:
+## ***Create the DAG file***  
+
+From `/home/project`, run the following code:
 
 ```bash
 touch ETL_toll_data.py
@@ -34,14 +38,21 @@ touch ETL_toll_data.py
 
 Open `ETL_toll_data.py` in the editor.
 
-## 2) Imports (what you typically need)
-The README asks for **PythonOperator** tasks, so you need:
+## 2) Imports (what you typically need)  
 
-- Airflow DAG + PythonOperator
-- `datetime.timedelta` and `days_ago` for scheduling defaults
-- Python libraries to download and process files (`requests`, `tarfile`, `csv`, etc.)
+The README asks for **PythonOperator**, plus the tasks represented by the following table:  
 
-Example import block:
+| Parameter | Value |
+| --------- | ----- |
+| owner | &lt;You may use any dummy name&gt; |  
+| start_date |	today | 
+| email | &lt;You may use any dummy email&gt; | 
+| email_on_failure | True | 
+| email_on_retry | True | 
+| retries | 1 | 
+| retry_delay | 5 minutes |   
+
+Which would require this import block:  
 
 ```python
 from datetime import timedelta
