@@ -38,7 +38,7 @@ touch ETL_toll_data.py
 
 Open `ETL_toll_data.py` in the editor.
 
-## 2) Imports (what you typically need)  
+## ***Imports***  
 
 The README asks for **PythonOperator**, plus the tasks represented by the following table:  
 
@@ -47,10 +47,9 @@ The README asks for **PythonOperator**, plus the tasks represented by the follow
 | owner | &lt;You may use any dummy name&gt; |  
 | start_date |	today | 
 | email | &lt;You may use any dummy email&gt; | 
-| email_on_failure | True | 
-| email_on_retry | True | 
 | retries | 1 | 
-| retry_delay | 5 minutes |   
+| retry_delay | 5 minutes |  
+
 
 Which would require this import block:  
 
@@ -66,14 +65,18 @@ import csv
 from pathlib import Path
 ```
 
-## 3) DAG arguments (default_args)
-Match the table in README:
+## ***DAG arguments (default_args)***  
 
-- `owner`: any dummy value
-- `start_date`: today (use `days_ago(0)`)
-- `email`: any dummy email
-- `retries`: 1
-- `retry_delay`: 5 minutes
+Now we have to match the table in README:
+
+
+| Parameter | Value |
+| --------- | ----- |
+| DAG id | `ETL_toll_data` |  
+| Schedule |		Daily once | 
+| default_args |	as you have defined in the previous step | 
+| description | Apache Airflow Final Assignment |    
+
 
 Example:
 
