@@ -67,7 +67,7 @@ from pathlib import Path
 
 ## ***DAG arguments (default_args)***  
 
-Now we have to match the table in README:
+At this point, we will have to insert the DAG arguments by matching the [README](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/PythonOperator%20ETL/README.md) table.
 
 
 | Parameter | Value |
@@ -78,7 +78,7 @@ Now we have to match the table in README:
 | description | Apache Airflow Final Assignment |    
 
 
-Example (ensure to fill this code with your name and email):
+To do so, I wrote the following code (ensure to fill this code with your name and email):
 
 ```python
 default_args = {
@@ -90,14 +90,18 @@ default_args = {
 }
 ```
 
-## 4) DAG definition
-Per README:
+## ***DAG definition***  
 
-- DAG id: `ETL_toll_data`
-- schedule: daily once (commonly `timedelta(days=1)`)
-- description: `Apache Airflow Final Assignment`
+To define the table, we have been given the following table:  
 
-Example:
+| Parameter | Value |
+| --------- | ----- |
+| DAG id | `ETL_toll_data` |  
+| Schedule |		Daily once | 
+| default_args |	as you have defined in the previous step | 
+| description | Apache Airflow Final Assignment |   
+
+Which would generate the following code:
 
 ```python
 dag = DAG(
@@ -108,297 +112,250 @@ dag = DAG(
 )
 ```
 
----
-
 <h1 align="center">Exercise 3: Create Python functions</h1>
 
-The key difference vs the BashOperator version is:
+### ***Set shared paths and URLs***  
 
-- Instead of `curl`, `tar`, `cut`, `paste`, `tr`
-- You write **Python functions** that do the same operations, then call them using **PythonOperator**.
-
-### Set shared paths and URLs
-The README gives:
+README gives:
 
 - **Source URL**: the `tolldata.tgz` link
 - **Destination**: `/home/project/airflow/dags/python_etl/staging`
 
-Use constants near the top:
+Which will lead us to define the path in the following fashion.
 
 ```python
-SOURCE_URL = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/tolldata.tgz"
-STAGING_DIR = Path("/home/project/airflow/dags/python_etl/staging")
-TGZ_PATH = STAGING_DIR / "tolldata.tgz"
+# Define the path for the input and output files
+source_url = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/tolldata.tgz'
+destination_path = '/home/project/airflow/dags/python_etl/staging'
 ```
 
----
+## ***`download_dataset`***  
 
-## 1) download_dataset
-Download the `.tgz` file into the staging directory.
-
-Implementation idea:
-
-- `requests.get(..., stream=True)`
-- write bytes to `TGZ_PATH`
-
-Example:
+Download the `.tgz` file into the staging directory by writing the same Python function that was taught in the course.
 
 ```python
+# Function to download the dataset
 def download_dataset():
-    STAGING_DIR.mkdir(parents=True, exist_ok=True)
-
-    with requests.get(SOURCE_URL, stream=True) as r:
-        r.raise_for_status()
-        with open(TGZ_PATH, "wb") as f:
-            for chunk in r.iter_content(chunk_size=1024 * 1024):
-                if chunk:
-                    f.write(chunk)
+    response = requests.get(source_url, stream=True)
+    if response.status_code == 200:
+        with open(f"{destination_path}/tolldata.tgz", 'wb') as f:
+            f.write(response.raw.read())
+    else:
+        print("Failed to download the file")
 ```
 
-Why streaming matters: it avoids loading the entire archive into memory.
+## ***`untar_dataset`***  
 
----
-
-## 2) untar_dataset
 Untar `tolldata.tgz` into the same staging folder.
 
-Example:
-
 ```python
+# Function to untar the dataset
 def untar_dataset():
-    with tarfile.open(TGZ_PATH, "r:gz") as tar:
-        tar.extractall(path=STAGING_DIR)
+    with tarfile.open(f"{destination_path}/tolldata.tgz", "r:gz") as tar:
+        tar.extractall(path=destination_path)
 ```
 
-After extraction, you should have files like:
+## ***`extract_data_from_csv`*** 
 
-- `vehicle-data.csv`
-- `tollplaza-data.tsv`
-- `payment-data.txt`
-- (often also `fileformats.txt`, which describes each file)
-
----
-
-## 3) extract_data_from_csv
-Extract these fields from `vehicle-data.csv`:
+Extract the following fields from `vehicle-data.csv`:
 
 - Rowid
 - Timestamp
 - Anonymized Vehicle number
 - Vehicle type
 
-In CSV terms, these are typically columns 1–4.
-
-Suggested approach:
-
-- read the input CSV using `csv.reader`
-- write a new CSV (`csv_data.csv`) with only the required columns
-
-Example:
+Which are in the columns 1–4 of the CSV.
 
 ```python
+# Function to extract data from CSV
 def extract_data_from_csv():
-    input_path = STAGING_DIR / "vehicle-data.csv"
-    output_path = STAGING_DIR / "csv_data.csv"
+    input_file = f"{destination_path}/vehicle-data.csv"
+    output_file = f"{destination_path}/csv_data.csv"
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
 
-    with open(input_path, newline="", encoding="utf-8") as infile,          open(output_path, "w", newline="", encoding="utf-8") as outfile:
-
-        reader = csv.reader(infile)
         writer = csv.writer(outfile)
-
-        # Optional: if input has header, keep it consistent:
-        # header = next(reader, None)
-
-        for row in reader:
-            writer.writerow(row[0:4])
+        writer.writerow(['Rowid', 'Timestamp', 'Anonymized Vehicle number', 'Vehicle type'])
+        for line in infile:
+            row = line.split(',')
+            writer.writerow([row[0], row[1], row[2], row[3]])
 ```
 
----
+## ***extract_data_from_tsv*** 
 
-## 4) extract_data_from_tsv
-Extract these fields from `tollplaza-data.tsv`:
+Extract the following fields from `tollplaza-data.tsv`:
 
 - Number of axles
 - Tollplaza id
 - Tollplaza code
 
-In the Bash version, these are typically columns 5–7.  
-In Python (0-based indexing), that corresponds to indices **4, 5, 6**.
-
-Example:
-
 ```python
+# Function to extract data from TSV
 def extract_data_from_tsv():
-    input_path = STAGING_DIR / "tollplaza-data.tsv"
-    output_path = STAGING_DIR / "tsv_data.csv"
-
-    with open(input_path, newline="", encoding="utf-8") as infile,          open(output_path, "w", newline="", encoding="utf-8") as outfile:
-
+    input_file = f"{destination_path}/tollplaza-data.tsv"
+    output_file = f"{destination_path}/tsv_data.csv"
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+        writer = csv.writer(outfile)
+        writer.writerow(['Number of axles', 'Tollplaza id', 'Tollplaza code'])
         for line in infile:
-            parts = line.rstrip("\n").split("\t")
-            outfile.write(",".join(parts[4:7]) + "\n")
+            row = line.split('\t')
+            writer.writerow([row[0], row[1], row[2]])
 ```
 
-Tip: you can also use `csv.reader(infile, delimiter="\t")` if you want a consistent style.
+## ***`extract_data_from_fixed_width`***  
 
----
-
-## 5) extract_data_from_fixed_width
 Extract these fields from `payment-data.txt`:
 
 - Type of Payment code
 - Vehicle Code
 
-This file is **fixed-width**, so you do not split by delimiter.  
-Instead, you use character slices.
-
-### How to find the correct slice positions
-If you have `fileformats.txt`, it typically documents how the fixed-width fields are arranged. If not, inspect one line:
+This file is **fixed-width**, so you do not split by delimiter; instead, you use character slices (this has been thoroughly explained in the [Bash Operator Resolution Case Study](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Resolution%20Case%20Study.md)).
 
 ```python
-with open(STAGING_DIR / "payment-data.txt", "r", encoding="utf-8") as f:
-    sample = f.readline()
-print(repr(sample))
-print(len(sample))
-```
-
-In the Bash-based case study, the payment code and vehicle code were extracted using character ranges like `60-62` and `64-68` (1-based indexing).  
-In Python slicing (0-based, end-exclusive), that becomes:
-
-- `Type of Payment code`: `line[59:62]`
-- `Vehicle Code`: `line[63:68]`
-
-Example:
-
-```python
+# Function to extract data from fixed width file
 def extract_data_from_fixed_width():
-    input_path = STAGING_DIR / "payment-data.txt"
-    output_path = STAGING_DIR / "fixed_width_data.csv"
-
-    with open(input_path, "r", encoding="utf-8") as infile,          open(output_path, "w", newline="", encoding="utf-8") as outfile:
-
+    input_file = f"{destination_path}/payment-data.txt"
+    output_file = f"{destination_path}/fixed_width_data.csv"
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
         writer = csv.writer(outfile)
+        writer.writerow(['Type of Payment code', 'Vehicle Code'])
         for line in infile:
-            pay_code = line[59:62].strip()
-            veh_code = line[63:68].strip()
-            writer.writerow([pay_code, veh_code])
+            writer.writerow([line[0:6].strip(), line[6:12].strip()])
 ```
 
-If your dataset’s spacing differs, adjust the slice positions accordingly (that’s why inspecting a sample line is useful).
+## ***`consolidate_data`***  
 
----
-
-## 6) consolidate_data
 Create `extracted_data.csv` by combining:
 
 - `csv_data.csv`
 - `tsv_data.csv`
 - `fixed_width_data.csv`
 
-The key idea (same as `paste` in Bash) is **row-wise concatenation**:
-
-- read one row from each file
-- write one combined row into the output
-
-Example:
-
 ```python
 def consolidate_data():
-    csv_path = STAGING_DIR / "csv_data.csv"
-    tsv_path = STAGING_DIR / "tsv_data.csv"
-    fixed_path = STAGING_DIR / "fixed_width_data.csv"
-    out_path = STAGING_DIR / "extracted_data.csv"
+    csv_file = f"{destination_path}/csv_data.csv"
+    tsv_file = f"{destination_path}/tsv_data.csv"
+    fixed_width_file = f"{destination_path}/fixed_width_data.csv"
+    output_file = f"{destination_path}/extracted_data.csv"
 
-    with open(csv_path, newline="", encoding="utf-8") as f1,          open(tsv_path, newline="", encoding="utf-8") as f2,          open(fixed_path, newline="", encoding="utf-8") as f3,          open(out_path, "w", newline="", encoding="utf-8") as out:
+    with open(csv_file, 'r') as csv_in, open(tsv_file, 'r') as tsv_in, open(fixed_width_file, 'r') as fixed_in, open(output_file, 'w') as out_file:
+        csv_reader = csv.reader(csv_in)
+        tsv_reader = csv.reader(tsv_in)
+        fixed_reader = csv.reader(fixed_in)
+        writer = csv.writer(out_file)
 
-        r1 = csv.reader(f1)
-        r2 = csv.reader(f2)
-        r3 = csv.reader(f3)
-        w = csv.writer(out)
+        writer.writerow(['Rowid', 'Timestamp', 'Anonymized Vehicle number', 'Vehicle type', 'Number of axles', 'Tollplaza id', 'Tollplaza code', 'Type of Payment code', 'Vehicle Code'])
+        next(csv_reader)
+        next(tsv_reader)
+        next(fixed_reader)
 
-        for a, b, c in zip(r1, r2, r3):
-            w.writerow(a + b + c)
+        for csv_row, tsv_row, fixed_row in zip(csv_reader, tsv_reader, fixed_reader):
+            writer.writerow(csv_row + tsv_row + fixed_row)
+
 ```
 
----
+## ***`transform_data`***  
 
-## 7) transform_data
 Transform the `Vehicle type` field in `extracted_data.csv` into uppercase and write:
 
 `/home/project/airflow/dags/python_etl/staging/transformed_data.csv`
 
-Because `Vehicle type` is the 4th column overall in the consolidated output (Rowid, Timestamp, Vehicle number, Vehicle type), it will usually sit at index `3` in the combined row.
-
-Example approach (index-based):
 
 ```python
 def transform_data():
-    input_path = STAGING_DIR / "extracted_data.csv"
-    output_path = STAGING_DIR / "transformed_data.csv"
+    input_file = f"{destination_path}/extracted_data.csv"
+    output_file = f"{destination_path}/transformed_data.csv"
 
-    with open(input_path, newline="", encoding="utf-8") as infile,          open(output_path, "w", newline="", encoding="utf-8") as outfile:
-
-        reader = csv.reader(infile)
-        writer = csv.writer(outfile)
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+        reader = csv.DictReader(infile)
+        writer = csv.DictWriter(outfile, fieldnames=reader.fieldnames)
+        writer.writeheader()
 
         for row in reader:
-            if len(row) >= 4:
-                row[3] = row[3].upper()
+            row['Vehicle type'] = row['Vehicle type'].upper()
             writer.writerow(row)
+
 ```
 
----
+<h1 align="center">Exercise 4: Create a tasks using PythonOperators and define pipeline</h1>
 
-<h1 align="center">Exercise 4: Create tasks using PythonOperators and define pipeline</h1>
+## ***Create tasks***
 
-## 1) Create tasks
-For each function above, create a `PythonOperator` task:
+For each function previously explained, and shown in the table below, now we proceed by creating a `PythonOperator` task for each:
+
+| Task | Functionality |
+| --------- | ----- |
+| First task | `download_data` |
+| Second task | `unzip_data` |  
+| Third task |	`extract_data_from_csv` | 
+| Fourth task | `extract_data_from_tsv` | 
+| Fivth task | `extract_data_from_fixed_width` | 
+| Sixth task | `consolidate_data` | 
+| Seventh task | `transform_data` |   
 
 ```python
+# Default arguments for the DAG
+default_args = {
+    'owner': 'Artifex Datorum',
+    'start_date': days_ago(0),
+    'email': ['your email'],
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
+
+# Define the DAG
+dag = DAG(
+    'ETL_toll_data',
+    default_args=default_args,
+    description='Apache Airflow Final Assignment',
+    schedule_interval=timedelta(days=1),
+)
+
+# Define the tasks
 download_task = PythonOperator(
-    task_id="download_dataset",
+    task_id='download_dataset',
     python_callable=download_dataset,
     dag=dag,
 )
 
 untar_task = PythonOperator(
-    task_id="untar_dataset",
+    task_id='untar_dataset',
     python_callable=untar_dataset,
     dag=dag,
 )
 
 extract_csv_task = PythonOperator(
-    task_id="extract_data_from_csv",
+    task_id='extract_data_from_csv',
     python_callable=extract_data_from_csv,
     dag=dag,
 )
 
 extract_tsv_task = PythonOperator(
-    task_id="extract_data_from_tsv",
+    task_id='extract_data_from_tsv',
     python_callable=extract_data_from_tsv,
     dag=dag,
 )
 
-extract_fixed_task = PythonOperator(
-    task_id="extract_data_from_fixed_width",
+extract_fixed_width_task = PythonOperator(
+    task_id='extract_data_from_fixed_width',
     python_callable=extract_data_from_fixed_width,
     dag=dag,
 )
 
 consolidate_task = PythonOperator(
-    task_id="consolidate_data",
+    task_id='consolidate_data',
     python_callable=consolidate_data,
     dag=dag,
 )
 
 transform_task = PythonOperator(
-    task_id="transform_data",
+    task_id='transform_data',
     python_callable=transform_data,
     dag=dag,
 )
 ```
 
-## 2) Define the pipeline (dependencies)
+## ***Define the pipeline (dependencies)***  
+
 The README pipeline order is:
 
 1. download_dataset
@@ -409,27 +366,21 @@ The README pipeline order is:
 6. consolidate_data
 7. transform_data
 
-So the simplest chain is:
+So we can create the following chain which, once untar is done, the three extraction tasks are run in parallel:
 
 ```python
-download_task >> untar_task >> extract_csv_task >> extract_tsv_task >> extract_fixed_task >> consolidate_task >> transform_task
+download_task >> untar_task >> [extract_csv_task, extract_tsv_task, extract_fixed_width_task] >> consolidate_task >> transform_task
 ```
-
-**Optional improvement (not always required by graders):**  
-Once untar is done, the three extraction tasks can run in parallel:
-
-```python
-download_task >> untar_task >> [extract_csv_task, extract_tsv_task, extract_fixed_task] >> consolidate_task >> transform_task
-```
-
----
 
 <h1 align="center">Exercise 5: Save, submit, and run DAG</h1>
 
-## 1) Save your DAG
-Ensure the file is saved as `ETL_toll_data.py`.
+## ***Save your DAG*** 
 
-## 2) Submit the DAG
+Ensure the file is saved as `ETL_toll_data.py` and save on your EDI.
+
+## ***Submit the DAG***  
+
+### ***Note: All the commands are written for the CLI. For the Airflow version, follow the same procedure explained in [Bash Operator Resolution Case Study](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Resolution%20Case%20Study.md)*** 
 Set Airflow home, then copy the DAG into the DAGs folder.
 
 ```bash
@@ -437,20 +388,20 @@ export AIRFLOW_HOME=/home/project/airflow
 sudo cp ETL_toll_data.py $AIRFLOW_HOME/dags
 ```
 
-(Depending on your lab structure, some exercises copy into a specific subfolder; the key is that Airflow must see it under `$AIRFLOW_HOME/dags`.)
+## ***Verify the DAG is visible***  
 
-## 3) Verify the DAG is visible
 ```bash
 airflow dags list | grep ETL_toll_data
 ```
 
-## 4) Unpause + trigger (CLI)
+## ***Unpause + trigger (CLI)***
 ```bash
 airflow dags unpause ETL_toll_data
 airflow dags trigger ETL_toll_data
 ```
 
-## 5) Observe runs / tasks
+## ***Observe runs / tasks***
+
 List runs:
 
 ```bash
@@ -466,12 +417,3 @@ airflow tasks list ETL_toll_data
 In the Airflow UI, you can also click the DAG, unpause it, then trigger it and inspect each task log to confirm outputs were created under:
 
 `/home/project/airflow/dags/python_etl/staging`
-
----
-
-## Notes on common pitfalls
-
-- **TSV extraction indices:** the required fields are typically columns 5–7; in Python indexing that’s `[4:7]`.
-- **Fixed-width slicing:** always confirm slice positions by inspecting a real line (or checking `fileformats.txt`) before hardcoding.
-- **Headers:** some datasets include headers; if so, decide whether to keep or skip them consistently across the pipeline.
-- **Paths:** keep all file paths inside `STAGING_DIR` so tasks can find each other’s outputs.
