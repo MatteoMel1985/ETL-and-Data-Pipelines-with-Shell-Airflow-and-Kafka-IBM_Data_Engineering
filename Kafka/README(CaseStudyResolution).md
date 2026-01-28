@@ -134,4 +134,116 @@ This Python module will help you to interact with MySQL server.
 
 ## ***Exercise 5: Create data pipeline for toll data***  
 
-1. 
+1. Create a Kafka topic named `toll`:
+
+  * Change directory into `kafka_2.12-3.7.0`.
+
+```bash
+cd kafka_2.12-3.7.0
+```
+
+  * Verify if `kafka-topics.sh` exist by running
+
+```bash
+ls bin
+```
+
+> You should be able to see `kafka-topics.sh` among the many files in the output.
+
+  * Finally, create the topic
+
+```bash
+bin/kafka-topics.sh --create --topic toll --bootstrap-server localhost:9092
+```
+
+The output in terminal should be `Created topic toll.`.  
+
+2. Download the `toll_traffic_generator.py` from the url given below using wget.
+
+```bash
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DB0250EN-SkillsNetwork/labs/Final%20Assignment/toll_traffic_generator.py
+```
+
+3. Open the code using the editor using the **“Menu –> File –>Open”** option (or go to **Explorer pane > kafka_2.12-3.7.0 > `toll_traffic_generator.py`**).
+
+4. Open the `toll_traffic_generator.py` and set the topic to `toll` (on line 9, you will see `TOPIC = 'set your topic here'`).
+
+5. Run the `toll_traffic_generator.py`
+
+```Python
+python3 toll_traffic_generator.py
+```
+
+You should now see a continuous list of information appearing in the terminal.  
+
+6. Open a new terminal and download the `streaming-data-reader.py` from the URL below using wget.
+
+```bash
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/vVxmU5uatDowvAIKRZrFjg/streaming-data-reader.py
+```
+
+7. Open the `streaming-data-reader.py` (as you did with `toll_traffic_generator.py`) and modify the following details so that the program can connect to your MySQL server.
+
+`TOPIC='toll'`
+`DATABASE = 'tolldata'`
+`USERNAME = 'root'`
+`PASSWORD = 'Insert_Your_MySQL_Password'`  
+
+8. Run the `streaming-data-reader.py.`
+
+```Bash
+python3 streaming-data-reader.py
+```
+
+9. If you completed all the steps correctly, the streaming toll data will get stored in the table `livetolldata`. As a last step in this lab, open mysql CLI and list the top 10 rows in the table `livetolldata`. To do so:
+
+* Open a new terminal.
+
+* Connect to MySQL as done before:
+
+```Bash
+mysql --host=mysql --port=3306 --user=root --password='insert_your_password'
+```
+
+ You should see the prompt becoming like `mysql>`  
+
+ * Select the database
+
+```sql
+USE tolldata;
+```
+
+You should now see the output `Database changed`.  
+
+* To list the top 10 rows from `livetolldata` launch the following command:
+
+```sql
+SELECT * FROM livetolldata LIMIT 10;
+```
+
+Following is my output with my current timestamp:
+
+| timestamp           | vehicle_id | vehicle_type | toll_plaza_id |
++---------------------+------------+--------------+---------------+
+| 2026-01-28 08:40:23 |    5732438 | truck        |          4010 |
+| 2026-01-28 08:40:25 |    6871172 | truck        |          4001 |
+| 2026-01-28 08:40:25 |     486364 | car          |          4001 |
+| 2026-01-28 08:40:26 |    7888747 | car          |          4002 |
+| 2026-01-28 08:40:27 |    9684981 | car          |          4006 |
+| 2026-01-28 08:40:27 |     230427 | car          |          4001 |
+| 2026-01-28 08:40:28 |    4167477 | car          |          4000 |
+| 2026-01-28 08:40:29 |    5888276 | car          |          4000 |
+| 2026-01-28 08:40:29 |    3206569 | car          |          4010 |
+| 2026-01-28 08:40:30 |    2369011 | car          |          4002 |
++---------------------+------------+--------------+---------------+  
+
+## Stop the producer  
+
+In the terminal where you are running producer, press CTRL+C.  
+
+## Stop the consumer  
+
+In the terminal where you are running consumer, press CTRL+C.  
+
+# Author
+# ***[Matteo Meloni](https://www.linkedin.com/in/matteo-meloni-40a357154/)***
