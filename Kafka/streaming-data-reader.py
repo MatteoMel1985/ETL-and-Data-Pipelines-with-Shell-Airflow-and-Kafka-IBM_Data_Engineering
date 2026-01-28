@@ -8,7 +8,7 @@ import mysql.connector
 TOPIC='toll'
 DATABASE = 'tolldata'
 USERNAME = 'root'
-PASSWORD = 'HT0mMdh4CIFrffUJ4HHf1Lwu' 
+PASSWORD = 'Insert your MySQL password here' 
 
 print("Connecting to the database")
 try:
@@ -41,4 +41,5 @@ for msg in consumer:
     result = cursor.execute(sql, (timestamp, vehcile_id, vehicle_type, plaza_id))
     print(f"A {vehicle_type} was inserted into the database")
     connection.commit()
+
 connection.close()
