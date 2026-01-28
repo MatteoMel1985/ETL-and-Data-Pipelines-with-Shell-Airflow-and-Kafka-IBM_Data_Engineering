@@ -83,7 +83,7 @@ Once the MySQL server started, select the Connection Information tab. From that,
 
 ![demo_image3](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/kWttEx8mDuoQZuHR74xZFg/ETL3.png)  
 
-Connect to the MySQL server using the command below in the terminal. Make sure you use the password given to you when the MySQL server starts. Please make a note of the password because you will need it later.
+Connect to the MySQL server using the command below in a new terminal. Make sure you use the password given to you when the MySQL server starts. Please make a note of the password because you will need it later.
 
 ```Bash
 mysql --host=mysql --port=3306 --user=root --password=Replace your password
