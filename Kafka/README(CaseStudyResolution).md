@@ -1,1 +1,91 @@
+![Skills_Network](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMSkillsNetwork-PY0221EN-Coursera/images/image.png)  
+
+<h1 align="center">Hands-on Lab: Build a Streaming ETL Pipeline using Kafka</h1>
+
+# ***Project Scenario***  
+
+You are a data engineer at a data analytics consulting company. You have been assigned to a project that aims to de-congest the national highways by analyzing the road traffic data from different toll plazas. As a vehicle passes a toll plaza, the vehicle's data like `vehicle_id`, `vehicle_type` , `toll_plaza_id` , and `timestamp` are streamed to Kafka. Your job is to create a data pipe line that collects the streaming data and loads it into a database.  
+
+# ***Objectives***  
+
+In this assignment, you will create a streaming data pipe by performing these steps:
+
+* Start a MySQL database server
+* Create a table to hold the toll data
+* Start the Kafka server
+* Install the Kafka Python driver
+* Install the MySQL Python driver
+* Create a topic named toll in Kafka
+* Download streaming data generator program
+* Customize the generator program to steam to toll topic
+* Download and customize streaming data consumer
+* Customize the consumer program to write into a MySQL database table
+* Verify that streamed data is being collected in the database table
+
+## ***Exercise 1: Download and extract Kafka***  
+
+1. Download Kafka by running the command below.
+
+```Bash
+wget https://archive.apache.org/dist/kafka/3.7.0/kafka_2.12-3.7.0.tgz
+```
+
+2. Extract Kafka from the zip file by running the command below.
+
+```Bash
+tar -xzf kafka_2.12-3.7.0.tgz
+```
+
+> ***Note***: *This command creates a directory named kafka_2.12-3.7.0 in the current directory*.
+
+## ***Exercise 2: Configure KRaft and start server***  
+
+1. Change to the `kafka_2.12-3.7.0` directory.
+
+```Bash
+cd kafka_2.12-3.7.0
+```
+
+2. Generate a cluster UUID that will uniquely identify the Kafka cluster.
+
+```Bash
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+```
+
+> ***Note***: *The new cluster id generated will be used by the KRaft controller*.
+
+
+3. KRaft requires the log directories to be configured. Run the following command to configure the log directories passing the cluster id.
+
+```Bash
+bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c config/kraft/server.properties
+```
+
+4. Now that KRaft is configured, you can start the Kafka server by running the following command.
+
+```Bash
+bin/kafka-server-start.sh config/kraft/server.properties
+```
+
+> ***Note***: *You can be sure that the Kafka server started there is information generated that the server started successfully along with some additional messages, such as log loaded*.
+
+![demo_image1](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/aN0HsMMBWXxj8gPhA8BVyg/KafkaStarted.jpg)  
+
+## ***Exercise 3: Start MySQL server and setup the database***  
+
+Open MySQL in IDE by clicking on the purple button, or by clicking on the Explorer icon in the left pane, then select Databases, then MySQL, and finally, click on the Create button.  
+
+![demo_image2](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/fNtJAjB4gJ4wl7wZ_LMKZQ/mysql1.png)  
+
+Once the MySQL server started, select the Connection Information tab. From that, copy the password.  
+
+![demo_image2](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/vlBHbkvNbPoWLHsqFb0w_g/mysql2.png)  
+
+![demo_image3](https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/kWttEx8mDuoQZuHR74xZFg/ETL3.png)  
+
+Connect to the MySQL server using the command below in the terminal. Make sure you use the password given to you when the MySQL server starts. Please make a note of the password because you will need it later.
+
+```Bash
+mysql --host=mysql --port=3306 --user=root --password=Replace your password
+```
 
