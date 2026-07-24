@@ -67,7 +67,7 @@ from pathlib import Path
 
 ## ***DAG arguments (default_args)***  
 
-At this point, we will have to insert the DAG arguments by matching the [README](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/PythonOperator%20ETL/README.md) table.
+At this point, we will have to insert the DAG arguments by matching the [README](./README.md) table.
 
 
 | Parameter | Value |
@@ -208,7 +208,7 @@ Extract these fields from `payment-data.txt`:
 - Type of Payment code
 - Vehicle Code
 
-This file is **fixed-width**, so you do not split by delimiter; instead, you use character slices (this has been thoroughly explained in the [Bash Operator Resolution Case Study](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Resolution%20Case%20Study.md)).
+This file is **fixed-width**, so you do not split by delimiter; instead, you use character slices (this has been thoroughly explained in the [Bash Operator Resolution Case Study](../Resolution%20Case%20Study.md)).
 
 ```python
 # Function to extract data from fixed width file
