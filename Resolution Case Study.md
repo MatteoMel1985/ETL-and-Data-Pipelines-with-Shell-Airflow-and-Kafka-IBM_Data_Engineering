@@ -45,7 +45,7 @@ Point 2 and 3 of Exercise 2 requires us to import all the needed packages to bui
 
 To do so, we must click on the Explorer Pane on the upper left, select `PROJECT`, then, double click on the file `ETL_toll_data.py` and wait for it to appear on the editor pane. 
 
-![Screenshot 1](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%201.png?raw=true) 
+![Screenshot 1](https://res.cloudinary.com/dmrfsdtq2/image/upload/v1784202489/sgu4q4i63v2yh4lquvaw.png) 
 
 Once you see it, write the following code (which is technically identical to the import section provided in Hands-on Lab: Create a DAG for Apache Airflow with BashOperator from Module 3 of the course), and ensure to insert your email.  
 
@@ -74,7 +74,7 @@ default_args = {
 
 Once you are done, take a screenshot of the task and name it `dag_args.jpg`.
 
-![dag_args.jpg`](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/1dag_args.jpg?raw=true)  
+![dag_args.jpg`](./Tasks/1dag_args.jpg)  
 
 Point 4 of the exercise require us to define the DAG in the `ETL_toll_data.py` file using the following details.
 
@@ -102,7 +102,7 @@ dag = DAG(
 
 Finally, we can take a screenshot of this part of the script and save it as `dag_definition.jpg`.  
 
-![dag_definition.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/2dag_definition.jpg?raw=true)  
+![dag_definition.jpg](./Tasks/2dag_definition.jpg)  
 
 
 <h1 align="center">Exercise 3: Create the tasks using BashOperator</h1>  
@@ -123,11 +123,11 @@ unzip_data = BashOperator(
 
 To complete the task, we can take a screenshot of this part of the code and save it as `unzip_data.jpg`.  
 
-![unzip_data.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/3unzip_data.jpg?raw=true)  
+![unzip_data.jpg](3unzip_data.jpg)  
 
 Proceeding with the exercise, we are now requested to create a task named `extract_data_from_csv` to extract the fields `Rowid`, `Timestamp`, `Anonymized Vehicle number`, and `Vehicle type` from the `vehicle-data.csv` file and save them into a file named `csv_data.csv`.  
 
-Before sharing the code I wrote, it is worth analysing both files [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), sharing the explanations of how the information was stored in each file, and [vehicle-data.csv](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/vehicle-data.csv), containing the data we must extract.  
+Before sharing the code I wrote, it is worth analysing both files [fileformats.txt](./Tolldata/fileformats.txt), sharing the explanations of how the information was stored in each file, and [vehicle-data.csv](./Tolldata/vehicle-data.csv), containing the data we must extract.  
 
 In `fileformats.txt`, we read the following:
 
@@ -156,11 +156,11 @@ extract_data_from_csv = BashOperator(
 
 Finally, we can take a screenshot of this part of the script and save it as `extract_data_from_csv.jpg`.  
 
-![extract_data_from_csv.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/4extract_data_from_csv.jpg?raw=true)  
+![extract_data_from_csv.jpg](./Tasks/4extract_data_from_csv.jpg)  
 
 The following request is substantially identical, except for the file format which, this time, is `.tsv`. Indeed, we are now required to create a task named `extract_data_from_tsv` to extract the fields `Number of axles`, `Tollplaza id`, and `Tollplaza code` from the `tollplaza-data.tsv` file and save it into a file named `tsv_data.csv`.  
 
-By reading [fileformats.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/fileformats.txt), we see that:
+By reading [fileformats.txt](./Tolldata/fileformats.txt), we see that:
 
 ```txt
 tollplaza-data.tsv:
@@ -189,11 +189,11 @@ extract_data_from_tsv = BashOperator(
 
 As we wrote this section of the code, we can take a screenshot of it and save it as `extract_data_from_tsv.jpg`.  
 
-![extract_data_from_tsv.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/5extract_data_from_tsv.jpg?raw=true)  
+![extract_data_from_tsv.jpg](./Tasks/5extract_data_from_tsv.jpg)  
 
 It is worth noting that the `.txt` format works quite differently. We can see it now as we are called to create a task named `extract_data_from_fixed_width` to extract the fields `Type of Payment code`, and `Vehicle Code` from the fixed width file `payment-data.txt` and save it into a file named `fixed_width_data.csv`.  
 
-Interestingly, what `fileformats.txt`say about [payment-data.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/payment-data.txt#L1) could be quite deceiving:
+Interestingly, what `fileformats.txt`say about [payment-data.txt](./Tolldata/payment-data.txt) could be quite deceiving:
 
 ```txt
 payment-data.txt is a fixed width file. Each field occupies a fixed number of characters.
@@ -210,7 +210,7 @@ Vehicle Code -  Category of the vehicle as per the toll plaza.
 ```
 
 Indeed, we may be led to think that we are requested to extract the data from columns 6 and 7, but `.txt` files are not shaped in columns.  
-Interestingly, though, we can observe that in [payment-data.txt](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tolldata/payment-data.txt#L1), each piece of information has the same length of characters. Therefore, by counting the characters of each line, we can determine where each piece of data has been stored. By carefully analysing the file, we can determine that `Type of Payment code` is scripted between the 59th and the 61st character of each line, whereas the 62nd character is a space that separates it from the next field, which is the `Vehicle Code`, comprehended between the 63rd and the 67th character. Thus, we can write this section of the code as follows.  
+Interestingly, though, we can observe that in [payment-data.txt](./Tolldata/payment-data.txt), each piece of information has the same length of characters. Therefore, by counting the characters of each line, we can determine where each piece of data has been stored. By carefully analysing the file, we can determine that `Type of Payment code` is scripted between the 59th and the 61st character of each line, whereas the 62nd character is a space that separates it from the next field, which is the `Vehicle Code`, comprehended between the 63rd and the 67th character. Thus, we can write this section of the code as follows.  
 
 ```bash
 # define the fourth task (extracting from txt)
@@ -223,7 +223,7 @@ extract_data_from_fixed_width = BashOperator(
 
 Then, take a screenshot of it and save it as `extract_data_from_fixed_width.jpg`. 
 
-![extract_data_from_fixed_width.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/6extract_data_from_fixed_width.jpg?raw=true)  
+![extract_data_from_fixed_width.jpg](./Tasks/6extract_data_from_fixed_width.jpg)  
 
 Following, we are requested to create a task named `consolidate_data` to consolidate data extracted from previous tasks. This task should create a single csv file named `extracted_data.csv` by combining data from the following files:  
 
@@ -263,7 +263,7 @@ consolidate_data = BashOperator(
 
 As requested, we can now take a screenshot of this portion of the code and save it as `consolidate_data.jpg`. 
 
-![consolidate_data.jpg](https://raw.githubusercontent.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/5a59591311a02329597a497644280f6a2c834202/Tasks/7consolidate_data.jpg)  
+![consolidate_data.jpg](./Tasks/7consolidate_data.jpg)  
 
 Continuing with the test, we are now required to create a task named `transform_data` to transform the `vehicle_type` field in `extracted_data.csv` into capital letters and save it into a file named `transformed_data.csv` in the staging directory. Interestingly, the hint provided reads *"You can use the `tr` command within the BashOperator in Airflow."* Technically, the instructions say it all. The following is the code I wrote.  
 
@@ -278,7 +278,7 @@ transform_data = BashOperator(
 
 Once done, we can save the screenshot as `transform.jpg`.  
 
-![transform.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/8transform.jpg?raw=true)  
+![transform.jpg](./Tasks/8transform.jpg)  
 
 Finally, the last task of the exercise requires us to define the task of the pipeline according to the table provided.  
 
@@ -299,7 +299,7 @@ unzip_data >> extract_data_from_csv >> extract_data_from_tsv >> extract_data_fro
 
 After taking a screenshot of this final part, we can save it as `task_pipeline.jpg`.  
 
-![task_pipeline.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/9task_pipeline.jpg?raw=true)  
+![task_pipeline.jpg](./Tasks/9task_pipeline.jpg)  
 
 <h1 align="center">Exercise 4: Getting the DAG operational</h1>  
 
@@ -329,7 +329,7 @@ airflow dags list | grep ETL_toll_data
 
 The command `grep` will scan line by line the DAGs in Apache Airflow and, among them, will search `ETL_toll_data`.  If the DAG submission was successful, the requested screenshot `submit_dag.jpg` will appear as follows. 
 
-![submit_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/10submit_dag.jpg?raw=true)  
+![submit_dag.jpg](./Tasks/10submit_dag.jpg)  
 
 At this stage of our work, we are tasked with unpausing the DAG. We can either do it via CLI (command line interface, which is our terminal), or UI (user interface). I will show both methods. 
 
@@ -342,21 +342,21 @@ airflow dags trigger ETL_toll_data
 ```
 If the DAG was submitted correctly, you should see a similar prompt to the image below. Take a screenshot of it and save it as `unpause_trigger_dag.jpg`.  
 
-![unpause_trigger_dag.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_CLI.jpg?raw=true)  
+![unpause_trigger_dag.jpg](./Tasks/11unpause_trigger_dag_CLI.jpg)  
 
 ## Triggering the DAG via UI  
 
 If you prefer to trigger the DAG via the user interface, click on the label named Apache Airflow in the EDI, and click the `Open in a new broswer tab` button whose icon is a square with an arrow on its upper right angle.  
 
-![Screenshot 2](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%202.png?raw=true)   
+![Screenshot 2](https://res.cloudinary.com/dmrfsdtq2/image/upload/v1784202491/p6i4q9ugnabvkrx0g8km.png)   
 
 The DAG `ETL_toll_data` should appear on top of the list; however, it could take a few minutes before it is visible, hence, wait for a bit and refresh the page several times until you are able to see it.  
 
-![Screenshot 3](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%203.png?raw=true)  
+![Screenshot 3](https://res.cloudinary.com/dmrfsdtq2/image/upload/v1784202493/rojzpftiqmgg39gnzi1h.png)  
 
 Click on it, and you will be prompted in the DAG Details view. On the upper left corner of the page, you will see a lever named `Pause/Unpause DAG`, whereas on the upper right side of the screen, you will see a Play button with written `Trigger DAG`. Click on both of them, take a screenshot, and save it as `unpause_trigger_dag.jpg`.  
 
-![unpause_trigger_dag_UI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/11unpause_trigger_dag_UI.jpg?raw=true)  
+![unpause_trigger_dag_UI.jpg](./Tasks/11unpause_trigger_dag_UI.jpg)  
 
 ## Listing the DAG tasks via CLI  
 
@@ -368,13 +368,13 @@ airflow tasks list ETL_toll_data
 
 If you followed the instructions of this case study, your output should appear as the image below. Take a screenshot of it and save it as `dag_tasks.jpg`.  
 
-![dag_tasks.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/12dag_tasks-CLI.JPG?raw=true)  
+![dag_tasks.jpg](./Tasks/12dag_tasks-CLI.JPG)  
 
 ## List of the DAG tasks on the UI  
 
 To accomplish this task, you can simply take a screenshot of the left side of the DAG Details view, where the tasks are listed, and save it as `dag_tasks_UI.jpg`  
 
-![dag_tasks.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/12dag_tasks_UI.JPG?raw=true)  
+![dag_tasks.jpg](./Tasks/12dag_tasks_UI.JPG)  
 
 ## Running the DAG via CLI  
 
@@ -387,7 +387,7 @@ airflow dags trigger ETL_toll_data
 
 This should queue the DAG, as shown in the following screenshot. 
 
-![Screenshot 4](https://github.com/MatteoMel1985/Relational-Dataset-Images/blob/main/Airflow/Screenshot%204.PNG?raw=true)
+![Screenshot 4](https://res.cloudinary.com/dmrfsdtq2/image/upload/v1784202495/akrrawsds4ltocoypk7l.png)
 
 To proceed to run it, launch the following code from the terminal.  
 
@@ -397,10 +397,10 @@ airflow dags list-runs -d ETL_toll_data
 
 Finally, take a screenshot of the output in your terminal and save it as `dag_runs_CLI.jpg`.
 
-![dag_runs_CLI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/13dag_runs-CLI.JPG?raw=true)
+![dag_runs_CLI.jpg](./Tasks/13dag_runs-CLI.JPG)
 
 ## Running the DAG via UI  
 
 If you want to run the DAG via UI, click on the `Trigger DAG` `play` button on the upper right corner of the screen, as shown on `unpause_trigger_dag.jpg`. Repeat the operation as many times as you want, then take a screenshot of it and save it as `dag_runs_UI.jpg`.
 
-![dag_runs_UI.jpg](https://github.com/MatteoMel1985/ETL-and-Data-Pipelines-with-Shell-Airflow-and-Kafka-IBM_Data_Engineering/blob/main/Tasks/13dag_runs-UI.JPG?raw=true)
+![dag_runs_UI.jpg](./Tasks/13dag_runs-UI.JPG)
